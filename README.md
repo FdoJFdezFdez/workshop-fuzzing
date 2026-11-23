@@ -82,8 +82,8 @@ Cada fichero tiene marcados los `TODO` y unas preguntas para pensar. Edítalo y 
 
 3. El workflow ejecuta **tus** fuzzers ([fuzzers/ci_fuzz.py](fuzzers/ci_fuzz.py)). Con los ejercicios sin hacer sale **verde**... ¿significa eso que el código no tiene bugs? 🤔
    Completa los ejercicios, haz push otra vez y verás el pipeline **en rojo**. Descarga el artifact `crashes`.
-3. Arregla un bug en `target/egc_parser.py`, haz push y comprueba que ese bug desaparece del informe.
-4. ¿Consigues un pipeline **verde**?
+4. Arregla un bug en `target/egc_parser.py`, haz push y comprueba que ese bug desaparece del informe.
+5. ¿Consigues un pipeline **verde**?
 
 ## ¿Vas sobrado? Extras ⭐
 
