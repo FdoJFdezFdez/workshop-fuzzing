@@ -13,7 +13,7 @@ TODO 1: completa mutate() con las tres mutaciones
 TODO 2: anade semillas en seeds/ (ficheros con entradas validas).
         ¿Que pasa si no hay semillas? ¿Y si las hay?
 
-Ejecuta:   python fuzzers/ex2_greybox.py            (90 segundos por defecto)
+Ejecuta:   python workshop.py ex2            (90 segundos por defecto)
 """
 import os
 import random
@@ -104,4 +104,7 @@ def main(budget: float):
 
 
 if __name__ == "__main__":
-    main(float(sys.argv[1]) if len(sys.argv) > 1 else 90)
+    try:
+        main(float(sys.argv[1]) if len(sys.argv) > 1 else 90)
+    except KeyboardInterrupt:
+        print("\nInterrumpido.")
