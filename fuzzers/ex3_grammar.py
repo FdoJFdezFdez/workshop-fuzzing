@@ -6,8 +6,8 @@ contra el programa. Lo que tienes que editar es grammars/egc.fan.
 El reto para casa (restricciones) se lanza igual: mira HOMEWORK.md.
 
 Ejecuta:   python workshop.py ex3                          (usa grammars/egc.fan)
-           python workshop.py ex3 -n 500                   (genera 500 entradas)
-           python workshop.py ex3 grammars/otra.fan
+            python workshop.py ex3 -n 500                   (genera 500 entradas)
+            python workshop.py ex3 grammars/egc.fan
 """
 import os
 import shutil
@@ -52,11 +52,11 @@ def generate(fan_file: str, n: int, quiet: bool = False) -> list:
     out = tempfile.mkdtemp(prefix="fandango-")
     try:
         r = subprocess.run(FANDANGO + ["fuzz", "-f", fan_file, "-n", str(n), "-d", out],
-                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+                            capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode != 0:
             raise SystemExit("\nFandango ha dado un error (¿algo mal escrito en la gramatica?):\n\n"
-                             + (r.stderr or r.stdout).strip()[-2000:] + "\n"
-                             + lint(fan_file))
+                            + (r.stderr or r.stdout).strip()[-2000:] + "\n"
+                            + lint(fan_file))
         inputs = []
         for name in sorted(os.listdir(out)):
             with open(os.path.join(out, name), "rb") as f:

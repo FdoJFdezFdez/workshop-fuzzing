@@ -16,11 +16,11 @@ TODO 2: anade semillas en seeds/ (ficheros con entradas validas).
 Ejecuta:   python workshop.py ex2            (90 segundos por defecto)
 
 ⭐ SI VAS RAPIDO (opcional, elige uno):
-   a) Diccionario: anade una cuarta mutacion que inserte una palabra clave
-      ("CALC ", "MSG ", "(", ...) en una posicion aleatoria.
-      ¿Encuentra bugs nuevos o mas rapido? AFL++ llama a esto "dictionaries".
-   b) Sin semillas: mueve los ficheros de seeds/ a otra carpeta y lanzalo.
-      ¿Llega a pasar de la cabecera? ¿Por que las semillas importan tanto?
+    a) Diccionario: anade una cuarta mutacion que inserte una palabra clave
+        ("CALC ", "MSG ", "(", ...) en una posicion aleatoria.
+        ¿Encuentra bugs nuevos o mas rapido? AFL++ llama a esto "dictionaries".
+    b) Sin semillas: mueve los ficheros de seeds/ a otra carpeta y lanzalo.
+        ¿Llega a pasar de la cabecera? ¿Por que las semillas importan tanto?
 """
 import os
 import random
@@ -71,19 +71,34 @@ def mutate(data: bytes) -> bytes:
     if not data:                      # entrada vacia: devolvemos un byte aleatorio
         return bytes([random.randrange(256)])
     data = bytearray(data)
-    choice = random.randint(0, 2)
+    choice = random.randint(0, 3)
 
     if choice == 0:
         # TODO: cambiar un byte en una posicion aleatoria por otro aleatorio
         # Pista: random.randrange(len(data)) da una posicion, random.randrange(256) un byte
+        pos = random.randrange(len(data))
+        data[pos] = random.randrange(256)
         pass
 
     elif choice == 1:
         # TODO: borrar un byte en una posicion aleatoria
+        pos = random.randrange(len(data))
+        del data[pos]
         pass
 
     elif choice == 2:
         # TODO: insertar un byte aleatorio en una posicion aleatoria
+        pos = random.randrange(len(data))
+        data.insert(pos, random.randrange(256))
+        pass
+    
+    elif choice == 3:
+        # Diccionario: anade una cuarta mutacion que inserte una palabra clave
+        # ("CALC ", "MSG ", "(", ...) en una posicion aleatoria.
+        keywords = [b"CALC ", b"MSG ", b"(", b"..."]
+        pos = random.randrange(len(data) + 1)
+        keyword = random.choice(keywords)
+        data[pos:pos] = keyword
         pass
 
     return bytes(data)
@@ -128,7 +143,7 @@ def main(budget: float):
     print(f"Corpus final: {len(corpus)} entradas")
     if len(corpus) == len(load_seeds()):
         print("   ⚠ El corpus no ha crecido: ninguna mutacion ha descubierto codigo nuevo.\n"
-              "     ¿Has completado mutate()? (TODO 1)")
+                "     ¿Has completado mutate()? (TODO 1)")
     return crashes.report(execs, time.time() - start)
 
 
